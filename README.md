@@ -6,6 +6,21 @@ Este é um visualizador de processos publicado pelo Bizagi Modeler, pronto para 
 
 Projeto de visualização do processo "Maus tratos (situação de pessoa privada de liberdade)" exportado do Bizagi Modeler.
 
+## 🚀 Como Atualizar o Site (Novos Diagramas)
+
+**Veja o guia completo:** [COMO-ATUALIZAR.md](COMO-ATUALIZAR.md)
+
+### Método Rápido (Recomendado):
+1. Exporte o diagrama do Bizagi para a pasta `public/`
+2. Execute o arquivo `deploy.ps1` (duplo clique)
+3. Digite uma descrição e pressione ENTER
+4. Pronto! O site atualiza automaticamente em 1-2 minutos ✨
+
+### Alternativas:
+- **`deploy-rapido.bat`** - Versão simplificada do script
+- **GitHub Desktop** - Interface visual e amigável
+- **Git CLI** - Para usuários avançados
+
 ## 🚀 Como Hospedar no Netlify
 
 ### Opção 1: Via Interface Web do Netlify
