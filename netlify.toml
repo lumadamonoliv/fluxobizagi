@@ -1,6 +1,6 @@
 [build]
   # Define o diretório que contém os arquivos a serem publicados
-  publish = "Tentar publicar"
+  publish = "public"
   
   # Não há comando de build necessário pois é um site estático
   command = "echo 'Site estático - sem build necessário'"
