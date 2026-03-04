@@ -6,7 +6,7 @@ Write-Host "  REMOVER DIAGRAMAS DO SITE" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Verificar se estamos no diretório correto
+# Verificar se estamos no diretorio correto
 if (-not (Test-Path "public\files\diagrams")) {
     Write-Host "ERRO: Execute este script na pasta do projeto!" -ForegroundColor Red
     pause
@@ -31,14 +31,14 @@ for ($i = 0; $i -lt $svgs.Count; $i++) {
 }
 
 Write-Host ""
-Write-Host "Digite os números dos diagramas para REMOVER (ex: 1,3):" -ForegroundColor Yellow
+Write-Host "Digite os numeros dos diagramas para REMOVER (ex: 1,3):" -ForegroundColor Yellow
 Write-Host "ou digite 0 para cancelar" -ForegroundColor Yellow
 Write-Host ""
 
 $escolha = Read-Host "Sua escolha"
 
 if ($escolha -eq "0" -or $escolha -eq "") {
-    Write-Host "Operação cancelada." -ForegroundColor Yellow
+    Write-Host "Operacao cancelada." -ForegroundColor Yellow
     pause
     exit 0
 }
@@ -54,23 +54,23 @@ foreach ($idx in $indices) {
 }
 
 if ($paraRemover.Count -eq 0) {
-    Write-Host "Nenhum diagrama válido selecionado." -ForegroundColor Yellow
+    Write-Host "Nenhum diagrama valido selecionado." -ForegroundColor Yellow
     pause
     exit 0
 }
 
-# Confirmar remoção
+# Confirmar remocao
 Write-Host ""
-Write-Host "ATENÇÃO: Os seguintes diagramas serão REMOVIDOS:" -ForegroundColor Red
+Write-Host "ATENCAO: Os seguintes diagramas serao REMOVIDOS:" -ForegroundColor Red
 foreach ($svg in $paraRemover) {
-    Write-Host "  ✗ $($svg.Name)" -ForegroundColor Red
+    Write-Host "  X $($svg.Name)" -ForegroundColor Red
 }
 Write-Host ""
 
 $confirma = Read-Host "Tem certeza? Digite 'SIM' para confirmar"
 
 if ($confirma -ne "SIM") {
-    Write-Host "Operação cancelada." -ForegroundColor Yellow
+    Write-Host "Operacao cancelada." -ForegroundColor Yellow
     pause
     exit 0
 }
@@ -85,27 +85,28 @@ foreach ($svg in $paraRemover) {
     
     if (Test-Path $arquivo1) {
         Remove-Item $arquivo1 -Force
-        Write-Host "  ✓ Removido: public\files\diagrams\$($svg.Name)" -ForegroundColor White
+        Write-Host "  V Removido: public\files\diagrams\$($svg.Name)" -ForegroundColor White
     }
     
     if (Test-Path $arquivo2) {
         Remove-Item $arquivo2 -Force
-        Write-Host "  ✓ Removido: Tentar publicar\files\diagrams\$($svg.Name)" -ForegroundColor White
+        Write-Host "  V Removido: Tentar publicar\files\diagrams\$($svg.Name)" -ForegroundColor White
     }
 }
 
 # Atualizar configuration.json.js
 Write-Host ""
-Write-Host "Atualizando configuração..." -ForegroundColor Green
+Write-Host "Atualizando configuracao..." -ForegroundColor Green
 
 $configPath = "public\libs\js\json\configuration.json.js"
 $configContent = Get-Content $configPath -Raw
 
-if ($configContent -match "Bizagi\.AppModel = (.+)") {
+$pattern = 'Bizagi\.AppModel = (.+)'
+if ($configContent -match $pattern) {
     $jsonStr = $matches[1]
     $config = $jsonStr | ConvertFrom-Json
     
-    # Remover diagramas da configuração
+    # Remover diagramas da configuracao
     $nomesRemover = $paraRemover | ForEach-Object { $_.Name }
     $config.pages = $config.pages | Where-Object { 
         $imagemNome = Split-Path $_.image -Leaf
@@ -126,7 +127,7 @@ if ($configContent -match "Bizagi\.AppModel = (.+)") {
     [System.IO.File]::WriteAllText("$PWD\public\libs\js\json\configuration.json.js", $novoConfig, [System.Text.Encoding]::UTF8)
     [System.IO.File]::WriteAllText("$PWD\Tentar publicar\libs\js\json\configuration.json.js", $novoConfig, [System.Text.Encoding]::UTF8)
     
-    Write-Host "  ✓ Configuração atualizada. Restam $($config.pages.Count) diagrama(s)" -ForegroundColor White
+    Write-Host "  V Configuracao atualizada. Restam $($config.pages.Count) diagrama(s)" -ForegroundColor White
 }
 
 # Git commit e push
@@ -140,15 +141,15 @@ git push
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
-Write-Host "  ✓ CONCLUÍDO COM SUCESSO!" -ForegroundColor Green
+Write-Host "  V CONCLUIDO COM SUCESSO!" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "Diagramas removidos:" -ForegroundColor White
 foreach ($svg in $paraRemover) {
-    Write-Host "  ✗ $($svg.Name)" -ForegroundColor Red
+    Write-Host "  X $($svg.Name)" -ForegroundColor Red
 }
 Write-Host ""
-Write-Host "O site será atualizado em 1-2 minutos." -ForegroundColor White
+Write-Host "O site sera atualizado em 1-2 minutos." -ForegroundColor White
 Write-Host ""
 
 pause
