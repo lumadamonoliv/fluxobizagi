@@ -1,121 +1,130 @@
 # Visualizador de Processos Bizagi - LumaFluxo
 
-Este é um visualizador de processos publicado pelo Bizagi Modeler, pronto para ser hospedado no Netlify.
+Este é um visualizador de processos publicado pelo Bizagi Modeler, hospedado no Netlify.
+
+**🌐 Site Publicado:** https://repositorioprocessos.netlify.app
 
 ## 📋 Descrição
 
 Projeto de visualização do processo "Maus tratos (situação de pessoa privada de liberdade)" exportado do Bizagi Modeler.
 
-Atualmente contém 2 diagramas:
-- Acompanhamento trimestral
-- Resposta e processamento
+### 📊 Diagramas Atuais (4):
+1. **Acompanhamento trimestral** (22 KB)
+2. **Inspeção** (13 KB)
+3. **Óbito - Atual** (489 KB)
+4. **Resposta e processamento** (547 KB)
 
-## ➕ Como Adicionar Novos Diagramas ao Site
+---
 
-**⚠️ IMPORTANTE:** Não adicione apenas arquivos SVG! Veja o guia completo: [COMO-ATUALIZAR.md - Seção de Novos Diagramas](COMO-ATUALIZAR.md#-como-adicionar-novos-diagramas-ao-site)
+## 🚀 Como Adicionar/Remover Diagramas
 
-### Resumo Rápido:
+Escolha o método que preferir:
 
-**Opção 1 (Recomendada):** Exporte o projeto COMPLETO do Bizagi com todos os diagramas
+### 🎯 Método 1: Scripts Automatizados (RECOMENDADO - Mais Fácil)
 
-**Opção 2:** Adicione SVGs manualmente + edite `configuration.json.js` nas 2 pastas (`public/` e `Tentar publicar/`)
+**➕ Adicionar diagrama:**
+1. Dê duplo clique em **`adicionar-diagrama.ps1`**
+2. Cole o caminho do arquivo SVG
+3. Digite o nome que aparecerá no site
+4. **Pronto!** ✨
 
-### ⚡ Por que preciso editar configuration.json.js?
-O Bizagi usa este arquivo para saber quais diagramas mostrar no sidebar. Apenas copiar SVGs não funciona!
+**➖ Remover diagrama:**
+1. Dê duplo clique em **`remover-diagrama.ps1`**
+2. Digite o número do diagrama
+3. Digite `SIM` para confirmar
+4. **Pronto!** ✨
 
-## 🚀 Como Atualizar Diagramas Existentes
+📖 **Guia completo:** [README-SCRIPTS.md](README-SCRIPTS.md)
 
-**Veja o guia completo:** [COMO-ATUALIZAR.md](COMO-ATUALIZAR.md)
+---
 
-### Método Rápido (Recomendado):
-1. Exporte o diagrama do Bizagi para a pasta `public/`
-2. Execute o arquivo `deploy.ps1` (duplo clique)
-3. Digite uma descrição e pressione ENTER
-4. Pronto! O site atualiza automaticamente em 1-2 minutos ✨
+### 🌐 Método 2: GitHub Web (De Qualquer Computador)
 
-### Alternativas:
-- **`deploy-rapido.bat`** - Versão simplificada do script
-- **GitHub Desktop** - Interface visual e amigável
-- **Git CLI** - Para usuários avançados
+Adicione diagramas direto pelo navegador, sem instalar nada!
 
-## 🚀 Como Hospedar no Netlify
+1. Faça upload do SVG no GitHub
+2. Edite o arquivo `configuration.json.js`
+3. Commit e aguarde deploy automático
 
-### Opção 1: Via Interface Web do Netlify
+📖 **Guia passo a passo:** [PUBLICAR-VIA-GITHUB-WEB.md](PUBLICAR-VIA-GITHUB-WEB.md)
 
-1. Acesse [netlify.com](https://www.netlify.com/) e faça login
-2. Clique em **"Add new site"** → **"Deploy manually"**
-3. Arraste a pasta raiz do projeto para a área de upload
-4. Aguarde o deploy ser concluído
-5. Seu site estará disponível em uma URL fornecida pelo Netlify (ex: `https://seu-site.netlify.app`)
+---
 
-### Opção 2: Via Git (Recomendado)
+### 💻 Método 3: Manual Completo (Para Usuários Avançados)
 
-1. Inicialize um repositório Git nesta pasta:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   ```
+- Exportar projeto completo do Bizagi
+- Editar manualmente arquivos de configuração
+- Usar Git CLI ou GitHub Desktop
 
-2. Crie um repositório no GitHub/GitLab/Bitbucket e faça push:
-   ```bash
-   git remote add origin <URL-DO-SEU-REPOSITORIO>
-   git push -u origin main
-   ```
+📖 **Guia detalhado:** [COMO-ATUALIZAR.md](COMO-ATUALIZAR.md)
+---
 
-3. No Netlify:
-   - Clique em **"Add new site"** → **"Import an existing project"**
-   - Conecte seu repositório
-   - O Netlify detectará automaticamente as configurações do arquivo `netlify.toml`
-   - Clique em **"Deploy site"**
+## 📚 Documentação Completa
 
-### Opção 3: Via Netlify CLI
+- **[README-SCRIPTS.md](README-SCRIPTS.md)** - Guia rápido dos scripts automatizados
+- **[PUBLICAR-VIA-GITHUB-WEB.md](PUBLICAR-VIA-GITHUB-WEB.md)** - Como adicionar diagramas pelo navegador
+- **[COMO-ATUALIZAR.md](COMO-ATUALIZAR.md)** - Documentação técnica completa
 
-1. Instale o Netlify CLI:
-   ```bash
-   npm install -g netlify-cli
-   ```
+---
 
-2. Faça login no Netlify:
-   ```bash
-   netlify login
-   ```
+## 🔧 Tecnologia
 
-3. Inicialize e faça deploy:
-   ```bash
-   netlify init
-   netlify deploy --prod
-   ```
+- **Bizagi Modeler v2024** - Ferramenta de modelagem BPMN
+- **Kinetic.js 4.x** - Renderização de canvas
+- **Foundation.js** - Framework CSS
+- **Netlify** - Hospedagem e deploy automático
+- **GitHub** - Versionamento e backup
+
+---
+
+## 🌐 Site e Repositório
+
+- **🌐 Site Publicado:** https://repositorioprocessos.netlify.app
+- **📦 Repositório GitHub:** https://github.com/charlieloganx23/fluxobizagi
+- **⚙️ Netlify Dashboard:** https://app.netlify.com/
+
+---
 
 ## 📁 Estrutura do Projeto
 
 ```
 lumafluxo/
-├── netlify.toml           # Configurações do Netlify
-├── README.md              # Este arquivo
-└── Tentar publicar/       # Pasta com o site (configurada como publish no netlify.toml)
-    ├── index.html         # Página principal
-    ├── key.json.js        # Configurações do visualizador
-    ├── files/
-    │   └── diagrams/      # Diagramas SVG dos processos
-    └── libs/              # Bibliotecas CSS e JavaScript
-        ├── css/
-        └── js/
+├── adicionar-diagrama.ps1    # Script para adicionar diagramas
+├── remover-diagrama.ps1      # Script para remover diagramas
+├── deploy.ps1                # Script de deploy rápido
+├── netlify.toml              # Configurações do Netlify
+├── README.md                 # Este arquivo
+├── README-SCRIPTS.md         # Guia dos scripts
+├── PUBLICAR-VIA-GITHUB-WEB.md # Guia GitHub Web
+├── COMO-ATUALIZAR.md         # Documentação técnica
+├── public/                   # Arquivos fonte (desenvolvimento)
+│   ├── files/diagrams/       # SVGs dos diagramas
+│   └── libs/js/json/         
+│       └── configuration.json.js  # Configuração dos diagramas
+└── Tentar publicar/          # Pasta publicada no Netlify
+    ├── index.html
+    ├── files/diagrams/       # Cópia dos SVGs
+    └── libs/                 # Bibliotecas e configurações
 ```
 
-## ⚙️ Configurações
+---
 
-O arquivo `key.json.js` contém as configurações personalizáveis do visualizador:
+## ⚙️ Como Funciona
 
-- **useTheme**: Usar tema personalizado
-- **preserveHTML**: Preservar formatação HTML
-- **showPublishDate**: Exibir data de publicação
-- **subNavigation**: Mostrar barra de subnavegação
-- **showPerformersList**: Mostrar lista de executantes
+1. **SVGs são armazenados** em `files/diagrams/`
+2. **configuration.json.js** define quais diagramas aparecem na sidebar
+3. **Git push** aciona deploy automático no Netlify
+4. **Site atualizado** em 1-2 minutos
 
-## 🌐 Após o Deploy
+**⚠️ IMPORTANTE:** Sempre mantenha sincronizado:
+- `public/` (arquivos fonte)
+- `Tentar publicar/` (arquivos que vão para o site)
 
-Após o deploy, você pode:
+Os scripts automatizados garantem essa sincronização!
+
+---
+
+## ❓ Suporte e Solução de Problemas
 
 - Configurar um domínio personalizado nas configurações do Netlify
 - Habilitar HTTPS (automático no Netlify)
@@ -126,12 +135,45 @@ Após o deploy, você pode:
 
 - Este é um site estático - não requer servidor ou banco de dados
 - Compatível com navegadores modernos (Chrome, Firefox, Edge)
-- Suporte para IE8+ (com algumas limitações)
 
-## 📅 Última Publicação
+**Problemas comuns e soluções:**
 
-27/02/2026 10:03:59
+### ❌ Scripts não executam
+```powershell
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+### ❌ Página não carrega após adicionar diagrama
+- Verifique se o arquivo `configuration.json.js` está com JSON válido
+- Use `git log` para ver últimas mudanças
+- Reverta o último commit se necessário
+
+### ❌ Diagrama não aparece na sidebar
+- Confirme que o arquivo SVG está em `Tentar publicar/files/diagrams/`
+- Verifique se o nome no `configuration.json.js` está exato (case-sensitive)
+- Aguarde 2-3 minutos e faça hard refresh (Ctrl+Shift+R)
+
+📖 **Mais soluções:** Veja os guias de documentação listados acima
 
 ---
 
-**Desenvolvido com Bizagi Modeler**
+## 📅 Informações do Projeto
+
+- **Última Atualização:** 04/03/2026
+- **Diagramas Atuais:** 4 processos
+- **Status:** ✅ Online e funcionando
+- **Deploy Automático:** ✅ Ativo via GitHub → Netlify
+
+---
+
+## 💡 Dicas Úteis
+
+- 🎯 Use os scripts automatizados sempre que possível
+- 🌐 GitHub Web é útil para edições rápidas de qualquer lugar
+- 💾 Faça backup local dos SVGs importantes
+- 🔄 O Netlify faz deploy em 1-2 minutos após o push
+- 🧹 Use Ctrl+Shift+R para forçar refresh sem cache
+
+---
+
+**Desenvolvido com Bizagi Modeler** | Hospedado no Netlify | Versionado no GitHub
