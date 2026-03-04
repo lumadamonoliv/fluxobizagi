@@ -1,222 +1,138 @@
 # 📖 Como Atualizar o Site com Novos Diagramas
 
-## 🚀 Método 1: Script Automático (Mais Rápido)
+## 🚀 Método 1: Scripts Automatizados (RECOMENDADO)
 
-### Primeira vez (Configuração única):
+### ✨ Configuração única (primeira vez):
 1. Abra o PowerShell como Administrador
 2. Execute: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 3. Digite `S` para confirmar
+4. Feche o PowerShell
 
-### Para cada atualização:
-1. **Exporte o diagrama do Bizagi:**
-   - No Bizagi Modeler: `File` → `Export` → `Web (HTML)`
-   - Salve em uma pasta temporária
+### ➕ Para ADICIONAR novos diagramas:
+1. **Exporte o SVG do Bizagi:**
+   - No Bizagi Modeler: `File` → `Publish` → selecione o diagrama
+   - Salve o arquivo `.svg` em qualquer pasta
 
-2. **Copie os arquivos:**
-   - Copie o conteúdo exportado para a pasta `public/`
-   - Substitua os arquivos antigos quando solicitado
+2. **Execute o script:**
+   - Dê **duplo clique** em `adicionar-diagrama.ps1`
+   - Cole o caminho da pasta ou do arquivo SVG
+   - Digite o nome que aparecerá no site
+   - Confirme!
 
-3. **Execute o script:**
-   - Dê **duplo clique** em `deploy.ps1`
-   - OU abra PowerShell e digite: `.\deploy.ps1`
-   - Digite uma descrição (ou pressione ENTER)
-   - Aguarde o script terminar
+3. **Pronto!** Deploy automático em 1-2 minutos ✨
 
-4. **Pronto!** O Netlify fará deploy automático em 1-2 minutos ✨
+### ➖ Para REMOVER diagramas:
+1. Dê **duplo clique** em `remover-diagrama.ps1`
+2. Digite o número do diagrama para remover
+3. Digite `SIM` para confirmar
+4. **Pronto!** Deploy automático em 1-2 minutos ✨
 
 ---
 
-## 🖱️ Método 2: GitHub Desktop (Mais Visual)
+## ⚠️ IMPORTANTE: O que NÃO fazer
 
-### Primeira vez:
+❌ **NÃO copie a pasta inteira** exportada do Bizagi para `diagrams/`  
+✅ Copie APENAS os arquivos `.svg` OU use o script automatizado
+
+❌ **NÃO adicione SVGs sem atualizar** `configuration.json.js`  
+✅ Use o script `adicionar-diagrama.ps1` que faz tudo automaticamente
+
+❌ **NÃO edite** `configuration.json.js` manualmente (pode quebrar o JSON)  
+✅ Use os scripts automatizados que garantem JSON válido
+
+---
+
+## 🖱️ Método 2: GitHub Desktop (Alternativa Visual)
+
+Se preferir uma interface gráfica após exportar os SVGs:
+
 1. Instale o [GitHub Desktop](https://desktop.github.com/)
-2. Faça login com sua conta do GitHub
-3. Adicione este repositório: `File` → `Add Local Repository`
-4. Selecione a pasta: `C:\Users\darkf\OneDrive\Documentos\lumafluxo`
+2. Adicione este repositório: `C:\Users\darkf\OneDrive\Documentos\lumafluxo`
+3. Após usar os scripts, abra o GitHub Desktop
+4. Ele mostrará as alterações automaticamente
+5. Clique em **"Commit to main"** e depois **"Push origin"**
 
-### Para cada atualização:
-1. Exporte o diagrama do Bizagi para a pasta `public/`
-2. Abra o GitHub Desktop
-3. Ele mostrará automaticamente as alterações
-4. Escreva uma descrição no campo "Summary"
-5. Clique em **"Commit to main"**
-6. Clique em **"Push origin"**
-7. Pronto! Netlify faz deploy automático ✨
+> **Nota:** Os scripts `adicionar-diagrama.ps1` e `remover-diagrama.ps1` já fazem commit e push automaticamente!
 
 ---
 
-## ⌨️ Método 3: Linha de Comando (Para usuários avançados)
+## 📋 Estrutura de Arquivos
 
-```powershell
-# Navegue até a pasta do projeto
-cd C:\Users\darkf\OneDrive\Documentos\lumafluxo
-
-# Adicione todos os arquivos
-git add -A
-
-# Faça o commit
-git commit -m "Atualização de diagramas"
-
-# Envie para o GitHub
-git push
-
-# O Netlify faz deploy automático!
+Os arquivos `.svg` devem estar em:
+```
+public/files/diagrams/*.svg
+Tentar publicar/files/diagrams/*.svg  (cópia sincronizada)
 ```
 
----
-
-## 📋 Estrutura de Pastas
-
-Quando exportar do Bizagi, certifique-se de manter esta estrutura:
-
+O arquivo de configuração:
 ```
-public/
-├── index.html                    ← Página principal
-├── key.json.js                   ← Configurações
-├── files/
-│   └── diagrams/                 ← Seus diagramas SVG aqui
-│       └── Diagrama 1.svg
-└── libs/                         ← Bibliotecas (não mexa)
+public/libs/js/json/configuration.json.js
+Tentar publicar/libs/js/json/configuration.json.js  (cópia sincronizada)
 ```
 
----
-
-## ➕ Como Adicionar Novos Diagramas ao Site
-
-### ⚠️ IMPORTANTE: NÃO adicione apenas arquivos SVG!
-
-O Bizagi precisa saber que os novos diagramas existem. Existem **2 formas corretas**:
-
-### ✅ Opção 1: Exportar Projeto COMPLETO (Recomendado)
-
-1. **No Bizagi Modeler:**
-   - Abra o projeto que contém TODOS os diagramas
-   - `File` → `Publish` → `Web`
-   - ⚠️ **Certifique-se que TODOS os diagramas estão no mesmo projeto**
-   - Salve em pasta temporária
-
-2. **Copiar arquivos:**
-   ```powershell
-   # Copiar tudo para as 2 pastas
-   Copy-Item "C:\Temp\Bizagi Export\*" "public\" -Recurse -Force
-   Copy-Item "C:\Temp\Bizagi Export\*" "Tentar publicar\" -Recurse -Force
-   ```
-
-3. **Commit e Push:**
-   - Use o script `deploy.ps1` OU GitHub Desktop
-   - Pronto! Diagramas aparecem no sidebar automaticamente
-
-### ✅ Opção 2: Adicionar Manualmente ao configuration.json.js
-
-Se você só tem os arquivos SVG novos:
-
-1. **Copie os SVG para as pastas:**
-   ```powershell
-   Copy-Item "C:\Temp\Novo Diagrama.svg" "public\files\diagrams\" -Force
-   Copy-Item "C:\Temp\Novo Diagrama.svg" "Tentar publicar\files\diagrams\" -Force
-   ```
-
-2. **Edite o arquivo de configuração:**
-   - Abra: `Tentar publicar\libs\js\json\configuration.json.js`
-   - Localize: `"pages":[...`
-   - Adicione novo diagrama na lista:
-
-   ```javascript
-   "pages":[
-     {
-       "id":"eb8fe458-7272-4a2d-becd-74e37acb504e",
-       "name":"Diagrama 1",
-       "version":"1.0",
-       "author":"Usuário",
-       "image":"files/diagrams/Diagrama 1.svg",
-       "isSubprocessPage":false,
-       "isCallActivityPage":false,
-       "elements":[],
-       "subPages":[]
-     },
-     // ⬇️ ADICIONE AQUI (copie e cole o bloco acima, mudando)
-     {
-       "id":"GERE-UM-ID-UNICO-AQUI",  // Mude os últimos dígitos
-       "name":"Nome do Novo Diagrama",
-       "version":"1.0",
-       "author":"Usuário",
-       "image":"files/diagrams/Nome do Arquivo.svg",
-       "isSubprocessPage":false,
-       "isCallActivityPage":false,
-       "elements":[],
-       "subPages":[]
-     }
-   ]
-   ```
-
-3. **Copie também para `public/`:**
-   ```powershell
-   Copy-Item "Tentar publicar\libs\js\json\configuration.json.js" "public\libs\js\json\" -Force
-   ```
-
-4. **Commit e Push**
-
-### ❌ O que NÃO fazer:
-
-- ❌ Não adicionar só SVG sem atualizar `configuration.json.js`
-- ❌ Não criar pastas separadas tipo "Diagrama 2/"
-- ❌ Não copiar arquivos apenas para `public/` (precisa estar em `Tentar publicar/` também!)
-
-### 🎯 Checklist Rápido:
-
-- [ ] Diagramas SVG em `public/files/diagrams/` E `Tentar publicar/files/diagrams/`
-- [ ] `configuration.json.js` atualizado em AMBAS as pastas
-- [ ] Commit e push feitos
-- [ ] Aguardou 1-2 minutos para deploy do Netlify
-- [ ] Testou com `Ctrl + Shift + R` (force refresh)
+> **Os scripts automatizados cuidam de tudo isso para você!**
 
 ---
 
-## ⚠️ Importante: Ajustar Caminhos no Bizagi
+## 🎯 Diagramas Atualmente no Site
 
-Para evitar problemas de caminho, no arquivo gerado pelo Bizagi:
-
-**Arquivo:** `public/libs/js/json/configuration.json.js`
-
-Certifique-se que os caminhos usam **barras normais** `/` e não `\`:
-
-✅ Correto: `"image": "files/diagrams/Diagrama 1.svg"`  
-❌ Errado: `"image": "files\\diagrams\\Diagrama 1.svg"`
-
----
-
-## 🔗 Links Úteis
-
-- **Seu Repositório:** https://github.com/charlieloganx23/fluxobizagi
-- **Netlify Dashboard:** https://app.netlify.com/
-- **Status do Deploy:** Acesse o Netlify para ver o progresso
+1. **Acompanhamento trimestral** (22 KB)
+2. **Inspeção** (13 KB)
+3. **Óbito - Atual** (489 KB)
+4. **Resposta e processamento** (547 KB)
 
 ---
 
 ## ❓ Solução de Problemas
 
-### O script não executa:
+### ❌ O script não executa:
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-### Erro de autenticação Git:
-- Configure suas credenciais:
-```powershell
-git config --global user.name "Seu Nome"
-git config --global user.email "seu@email.com"
-```
+### ❌ "Caminho não encontrado" ao usar adicionar-diagrama.ps1:
+- Cole o caminho completo do arquivo ou pasta
+- Exemplo: `C:\Users\darkf\Downloads\Diagrama.svg`
+- Ou: `C:\Users\darkf\Downloads\` (para buscar todos os SVGs)
 
-### Netlify não está atualizando:
-1. Verifique se o push foi bem-sucedido no GitHub
-2. Acesse o dashboard do Netlify
-3. Verifique os logs de deploy
+### ❌ Netlify não está atualizando:
+1. Aguarde 2-3 minutos (deploy leva tempo)
+2. Recarregue com `Ctrl + Shift + R` (limpa cache)
+3. Verifique o [GitHub](https://github.com/charlieloganx23/fluxobizagi) se o commit foi enviado
+4. Veja os logs no [Netlify Dashboard](https://app.netlify.com/)
+
+### ❌ Página não carrega após adicionar diagrama:
+- Verifique se o arquivo SVG tem acento no nome (evite!)
+- Use o script `remover-diagrama.ps1` para desfazer
+- Preferencialmente: renomeie o SVG sem acentos antes de adicionar
+
+### ❌ "Erro JSON" ou página em branco:
+- O `configuration.json.js` pode estar quebrado
+- Entre em contato para restaurar backup
 
 ---
 
-## 💡 Dica Pro
+## 🔗 Links Importantes
 
-Crie um **atalho** para o `deploy.ps1` na sua área de trabalho:
-1. Clique direito em `deploy.ps1`
-2. Enviar para → Área de trabalho (criar atalho)
-3. Agora você pode fazer deploy com duplo clique! 🚀
+- 🌐 **Site Publicado:** https://repositorioprocessos.netlify.app
+- 📦 **Repositório GitHub:** https://github.com/charlieloganx23/fluxobizagi
+- ⚙️ **Netlify Dashboard:** https://app.netlify.com/
+
+---
+
+## 💡 Dicas Finais
+
+✅ **Boas Práticas:**
+- Use nomes de arquivo sem acentos ou caracteres especiais
+- Mantenha os SVGs em tamanho razoável (< 1 MB se possível)
+- Teste localmente antes de adicionar muitos diagramas de uma vez
+- Use os scripts automatizados sempre que possível
+
+✅ **Atalho Rápido:**
+- Crie atalhos dos scripts na sua área de trabalho para acesso rápido
+- Clique direito no `.ps1` → "Criar atalho" → Mova para área de trabalho
+
+---
+
+**📅 Última atualização:** 04/03/2026  
+**✨ Scripts criados:** `adicionar-diagrama.ps1` e `remover-diagrama.ps1`
