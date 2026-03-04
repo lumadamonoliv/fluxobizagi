@@ -6,8 +6,7 @@ Este é um visualizador de processos publicado pelo Bizagi Modeler, pronto para 
 
 Projeto de visualização do processo "Maus tratos (situação de pessoa privada de liberdade)" exportado do Bizagi Modeler.
 
-Atualmente contém 3 diagramas:
-- Diagrama 1
+Atualmente contém 2 diagramas:
 - Acompanhamento trimestral
 - Resposta e processamento
 
