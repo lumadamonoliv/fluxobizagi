@@ -6,27 +6,27 @@ Write-Host "  ADICIONAR NOVOS DIAGRAMAS AO SITE" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Verificar se estamos no diretório correto
+# Verificar se estamos no diretorio correto
 if (-not (Test-Path "public\files\diagrams")) {
     Write-Host "ERRO: Execute este script na pasta do projeto!" -ForegroundColor Red
-    Write-Host "Caminho esperado: C:\Users\darkf\OneDrive\Documentos\limafluxo" -ForegroundColor Yellow
+    Write-Host "Caminho esperado: C:\Users\darkf\OneDrive\Documentos\lumafluxo" -ForegroundColor Yellow
     pause
     exit 1
 }
 
 # Passo 1: Solicitar a pasta com os novos SVGs
 Write-Host "PASSO 1: Localize os arquivos SVG" -ForegroundColor Green
-Write-Host "Onde estão os novos arquivos SVG?" -ForegroundColor Yellow
+Write-Host "Onde estao os novos arquivos SVG?" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "Opções:" -ForegroundColor White
+Write-Host "Opcoes:" -ForegroundColor White
 Write-Host "  1. Digitar o caminho da pasta" -ForegroundColor White
-Write-Host "  2. Digitar o caminho de um arquivo SVG específico" -ForegroundColor White
+Write-Host "  2. Digitar o caminho de um arquivo SVG especifico" -ForegroundColor White
 Write-Host ""
 
 $caminho = Read-Host "Cole aqui o caminho completo da pasta ou arquivo"
 
 if (-not (Test-Path $caminho)) {
-    Write-Host "ERRO: Caminho não encontrado: $caminho" -ForegroundColor Red
+    Write-Host "ERRO: Caminho nao encontrado: $caminho" -ForegroundColor Red
     pause
     exit 1
 }
@@ -34,14 +34,14 @@ if (-not (Test-Path $caminho)) {
 # Encontrar todos os SVGs
 $svgs = @()
 if ((Get-Item $caminho).PSIsContainer) {
-    # É uma pasta - buscar SVGs recursivamente
+    # E uma pasta - buscar SVGs recursivamente
     $svgs = Get-ChildItem -Path $caminho -Filter "*.svg" -Recurse
 } else {
-    # É um arquivo
+    # E um arquivo
     if ($caminho -like "*.svg") {
         $svgs = @(Get-Item $caminho)
     } else {
-        Write-Host "ERRO: O arquivo não é um SVG!" -ForegroundColor Red
+        Write-Host "ERRO: O arquivo nao e um SVG!" -ForegroundColor Red
         pause
         exit 1
     }
@@ -71,7 +71,7 @@ if ($svgs.Count -eq 1) {
         $selecionados += $svgs[0]
     }
 } else {
-    Write-Host "Digite os números dos diagramas para adicionar (ex: 1,3,4) ou ENTER para todos:" -ForegroundColor Yellow
+    Write-Host "Digite os numeros dos diagramas para adicionar (ex: 1,3,4) ou ENTER para todos:" -ForegroundColor Yellow
     for ($i = 0; $i -lt $svgs.Count; $i++) {
         Write-Host "  [$($i+1)] $($svgs[$i].Name)" -ForegroundColor White
     }
@@ -97,15 +97,15 @@ if ($selecionados.Count -eq 0) {
 }
 
 Write-Host ""
-Write-Host "Serão adicionados $($selecionados.Count) diagrama(s):" -ForegroundColor Green
+Write-Host "Serao adicionados $($selecionados.Count) diagrama(s):" -ForegroundColor Green
 foreach ($svg in $selecionados) {
-    Write-Host "  ✓ $($svg.Name)" -ForegroundColor White
+    Write-Host "  V $($svg.Name)" -ForegroundColor White
 }
 Write-Host ""
 
-# Passo 3: Pedir nomes amigáveis para cada diagrama
+# Passo 3: Pedir nomes amigaveis para cada diagrama
 Write-Host "PASSO 3: Nomear os diagramas no site" -ForegroundColor Green
-Write-Host "Digite o nome que aparecerá na barra lateral (ou ENTER para usar o nome do arquivo):" -ForegroundColor Yellow
+Write-Host "Digite o nome que aparecera na barra lateral (ou ENTER para usar o nome do arquivo):" -ForegroundColor Yellow
 Write-Host ""
 
 $diagramas = @()
@@ -135,19 +135,20 @@ foreach ($diagrama in $diagramas) {
     Copy-Item $diagrama.Arquivo.FullName $destino1 -Force
     Copy-Item $diagrama.Arquivo.FullName $destino2 -Force
     
-    Write-Host "  ✓ $($diagrama.Arquivo.Name) copiado" -ForegroundColor White
+    Write-Host "  V $($diagrama.Arquivo.Name) copiado" -ForegroundColor White
 }
 
 # Passo 5: Atualizar configuration.json.js
 Write-Host ""
-Write-Host "PASSO 5: Atualizando configuração..." -ForegroundColor Green
+Write-Host "PASSO 5: Atualizando configuracao..." -ForegroundColor Green
 
 # Ler diagramas existentes
 $configPath = "public\libs\js\json\configuration.json.js"
 $configContent = Get-Content $configPath -Raw
 
 # Extrair o JSON existente
-if ($configContent -match "Bizagi\.AppModel = (.+)") {
+$pattern = 'Bizagi\.AppModel = (.+)'
+if ($configContent -match $pattern) {
     $jsonStr = $matches[1]
     $config = $jsonStr | ConvertFrom-Json
     
@@ -157,7 +158,7 @@ if ($configContent -match "Bizagi\.AppModel = (.+)") {
             id = $diagrama.Id
             name = $diagrama.Nome
             version = "1.0"
-            author = "Usuário"
+            author = "Usuario"
             image = "files/diagrams/$($diagrama.Arquivo.Name)"
             isSubprocessPage = $false
             isCallActivityPage = $false
@@ -179,7 +180,7 @@ if ($configContent -match "Bizagi\.AppModel = (.+)") {
     [System.IO.File]::WriteAllText("$PWD\public\libs\js\json\configuration.json.js", $novoConfig, [System.Text.Encoding]::UTF8)
     [System.IO.File]::WriteAllText("$PWD\Tentar publicar\libs\js\json\configuration.json.js", $novoConfig, [System.Text.Encoding]::UTF8)
     
-    Write-Host "  ✓ Configuração atualizada com $($config.pages.Count) diagramas" -ForegroundColor White
+    Write-Host "  V Configuracao atualizada com $($config.pages.Count) diagramas" -ForegroundColor White
 }
 
 # Passo 6: Git commit e push
@@ -199,18 +200,18 @@ git push
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
-Write-Host "  ✓ CONCLUÍDO COM SUCESSO!" -ForegroundColor Green
+Write-Host "  V CONCLUIDO COM SUCESSO!" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "Seus novos diagramas foram adicionados:" -ForegroundColor White
 foreach ($diagrama in $diagramas) {
-    Write-Host "  • $($diagrama.Nome)" -ForegroundColor Cyan
+    Write-Host "  * $($diagrama.Nome)" -ForegroundColor Cyan
 }
 Write-Host ""
-Write-Host "O site será atualizado em 1-2 minutos em:" -ForegroundColor White
+Write-Host "O site sera atualizado em 1-2 minutos em:" -ForegroundColor White
 Write-Host "  https://repositorioprocessos.netlify.app" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Recarregue a página com Ctrl+F5 para ver as alterações." -ForegroundColor Yellow
+Write-Host "Recarregue a pagina com Ctrl+F5 para ver as alteracoes." -ForegroundColor Yellow
 Write-Host ""
 
 pause
