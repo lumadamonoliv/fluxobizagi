@@ -1,0 +1,3 @@
+# Redirecionar todas as rotas para index.html (para SPA)
+# Mas permitir que arquivos estáticos sejam servidos primeiro
+/*    /index.html   200
