@@ -101,7 +101,7 @@ Write-Host "Atualizando configuração..." -ForegroundColor Green
 $configPath = "public\libs\js\json\configuration.json.js"
 $configContent = Get-Content $configPath -Raw
 
-if ($configContent -match 'Bizagi\.AppModel = (.+)') {
+if ($configContent -match "Bizagi\.AppModel = (.+)") {
     $jsonStr = $matches[1]
     $config = $jsonStr | ConvertFrom-Json
     
